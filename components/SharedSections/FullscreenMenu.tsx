@@ -3,16 +3,8 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import HoverFillText from "./HoverFillText";
+import { NAV_LINKS } from "@/lib/constants/Navlinks";
 
-const links = [
-  { text: "Home", href: "/" },
-  { text: "About", href: "/about" },
-  { text: "Collection", href: "/collection" },
-  { text: "Brands", href: "/brands" },
-  { text: "Gallery", href: "/gallery" },
-  { text: "Blog", href: "/blog" },
-  { text: "ContactUs", href: "/contact" },
-];
 
 export default function FullscreenMenu({ close }: { close: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -63,7 +55,7 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
               : "flex-row gap-20 px-[20vw]"
           }`}
         >
-          {links.map((link) => (
+          {NAV_LINKS.map((link) => (
             <HoverFillText key={link.text} text={link.text} href={link.href} closeMenu={close}/>
           ))}
         </motion.div>
