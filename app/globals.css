@@ -122,3 +122,24 @@ body {
   color: var(--foreground);
   font-family: "CormorantGaramond", serif;
 }
+
+/* Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* IE & old Edge */
+body {
+  -ms-overflow-style: none;
+}
+
+/* Remove horizontal scroll */
+html,
+body {
+  overflow-x: hidden;
+}

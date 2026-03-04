@@ -93,7 +93,7 @@ export const metadata: Metadata = {
 
 import Navbar from "@/components/SharedSections/Navbar";
 import Footer from "@/components/SharedSections/Footer";
-
+import ScrollToTop from "@/components/Sections/ScrollToTop";
 export default function RootLayout({
   children,
 }: {
@@ -105,6 +105,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );
