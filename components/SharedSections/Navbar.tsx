@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import FullscreenMenu from "./FullscreenMenu";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,15 +12,25 @@ export default function Navbar() {
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
+  const pathname = usePathname();
+
+  // Convert pathname to display text
+  const getPageName = () => {
+    if (pathname === "/") return "Home";
+
+    return pathname
+      .replace("/", "")
+      .replace("-", " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        // scrolling down
         setVisible(false);
       } else {
-        // scrolling up
         setVisible(true);
       }
 
@@ -32,7 +43,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* NAVBAR CONTAINER */}
       <motion.div
         initial={{ y: 0 }}
         animate={{ y: visible ? 0 : -100 }}
@@ -50,14 +60,11 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* RIGHT SIDE - HOME + HAMBURGER */}
+        {/* RIGHT SIDE - Dynamic Page Name + Hamburger */}
         <div className="flex items-center gap-22 text-black">
-          <Link
-            href="/"
-            className="text-lg tracking-wide hover:opacity-70 transition"
-          >
-            HOME
-          </Link>
+          <span className="text-lg tracking-wide">
+            {getPageName()}
+          </span>
 
           <button
             onClick={() => setOpen((prev) => !prev)}
@@ -68,7 +75,6 @@ export default function Navbar() {
         </div>
       </motion.div>
 
-      {/* MENU */}
       <AnimatePresence>
         {open && <FullscreenMenu close={() => setOpen(false)} />}
       </AnimatePresence>
