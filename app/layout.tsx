@@ -2,20 +2,15 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const cormorant = localFont({
+const robotoSlab = localFont({
   src: [
     {
-      path: "./Fonts/CormorantGaramond-VariableFont_wght.ttf",
+      path: "./Fonts/RobotoSlab-VariableFont_wght.ttf",
       weight: "100 900",
       style: "normal",
     },
-    {
-      path: "./Fonts/CormorantGaramond-Italic-VariableFont_wght.ttf",
-      weight: "100 900",
-      style: "italic",
-    },
   ],
-  variable: "--font-cormorant",
+  variable: "--font-roboto-slab",
   display: "swap",
 });
 
@@ -100,8 +95,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cormorant.variable}>
-      <body className="antialiased font-serif">
+    <html lang="en" className={robotoSlab.variable}>
+      <body className="antialiased font-robotoSlab">
         <Navbar />
         {children}
         <Footer />

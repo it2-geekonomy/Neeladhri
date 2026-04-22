@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        cormorant: ["CormorantGaramond", "serif"],
+        robotoSlab: ["RobotoSlab", "serif"],
       },
     },
   },
