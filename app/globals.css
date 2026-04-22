@@ -131,11 +131,13 @@ body {
 /* Firefox */
 html {
   scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 
 /* IE & old Edge */
 body {
   -ms-overflow-style: none;
+  scroll-behavior: smooth;
 }
 
 /* Remove horizontal scroll */

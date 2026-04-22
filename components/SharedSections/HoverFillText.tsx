@@ -2,46 +2,39 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 interface HoverFillTextProps {
   text: string;
   href: string;
-  closeMenu: () => void;  // menu close callback
-  exitDuration?: number;  // duration of curtain exit
+  closeMenu: () => void;
+  exitDuration?: number;
 }
 
 export default function HoverFillText({
   text,
   href,
   closeMenu,
-  exitDuration = 0.8,
 }: HoverFillTextProps) {
   const [hovered, setHovered] = useState(false);
-  const router = useRouter();
-  const fillDuration = 0.4; // fill animation duration
+  const fillDuration = 0.4;
 
   const handleClick = () => {
-    setHovered(true); // start fill animation
-
-    // Step 1: after fill completes, close the menu
-    setTimeout(() => {
-      closeMenu?.();
-
-      // Step 2: after menu exit completes, redirect
-      setTimeout(() => {
-        if (window.location.pathname === href) {
-          window.location.reload();
-        } else {
-          router.push(href);
-        }
-      }, exitDuration * 1000);
-    }, fillDuration * 1000);
+    setHovered(true);
+    closeMenu();
+    // Full-page navigation so redirect always completes (avoids removeChild blocking SPA transition)
+    requestAnimationFrame(() => {
+      if (window.location.pathname === href) {
+        window.location.reload();
+      } else {
+        window.location.href = href;
+      }
+    });
   };
 
   return (
-    <div
-      className="relative inline-block cursor-pointer"
+    <button
+      type="button"
+      className="relative inline-block cursor-pointer text-left bg-transparent border-none p-0"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={handleClick}
@@ -65,6 +58,6 @@ export default function HoverFillText({
           {text}
         </span>
       </motion.span>
-    </div>
+    </button>
   );
 }

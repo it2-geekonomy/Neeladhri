@@ -56,7 +56,12 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
           }`}
         >
           {NAV_LINKS.map((link) => (
-            <HoverFillText key={link.text} text={link.text} href={link.href} closeMenu={close}/>
+            <HoverFillText
+              key={link.text}
+              text={link.text}
+              href={link.href}
+              closeMenu={close}
+            />
           ))}
         </motion.div>
       </div>
