@@ -1,7 +1,5 @@
-export default function About() {
-  return (
-    <div className="h-screen flex items-center justify-center">
-      Brand Page
-    </div>
-  );
+import BrandsSection from "@/components/Sections/BrandsSection";
+
+export default function BrandsPage() {
+  return <BrandsSection />;
 }

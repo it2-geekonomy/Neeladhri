@@ -1,83 +1,102 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { usePathname } from "next/navigation";
-import FullscreenMenu from "./FullscreenMenu";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import Typography from "@/lib/Typography";
 
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Collection", href: "/collection" },
+  { name: "Brands", href: "/brands" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "Blog", href: "/blog" },
+  { name: "Contact Us", href: "/contact" },
+];
 
-  const pathname = usePathname();
+interface NavbarProps {
+  menuOpen: boolean;
+  onMenuToggle: (open: boolean) => void;
+}
 
-  // Convert pathname to display text
-  const getPageName = () => {
-    if (pathname === "/") return "Home";
-
-    return pathname
-      .replace("/", "")
-      .replace("-", " ")
-      .replace(/\b\w/g, (char) => char.toUpperCase());
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
-
+function HamburgerIcon({ open }: { open: boolean }) {
   return (
-    <>
-      <motion.div
-        initial={{ y: 0 }}
-        animate={{ y: visible ? 0 : -100 }}
-        transition={{ duration: 0.3 }}
-        className="fixed top-0 left-0 w-full flex items-center justify-between px-18 py-4 z-[9999] bg-white"
-      >
-        {/* LEFT SIDE - LOGO */}
-        <Link href="/" className="flex items-center">
+    <div className="flex flex-col gap-[5px]">
+      <span
+        className={`block h-[2px] transition-all duration-300 origin-center ${
+          open ? "w-6 rotate-45 translate-y-[3.5px] bg-black" : "w-6 bg-[#2b2320]"
+        }`}
+      />
+      <span
+        className={`block h-[2px] transition-all duration-300 ${
+          open ? "opacity-0 w-6 bg-black" : "w-4 bg-[#2b2320]"
+        }`}
+      />
+      <span
+        className={`block h-[2px] transition-all duration-300 origin-center ${
+          open ? "w-6 -rotate-45 -translate-y-[3.5px] bg-black" : "w-6 bg-[#2b2320]"
+        }`}
+      />
+    </div>
+  );
+}
+
+export default function Navbar({ menuOpen, onMenuToggle }: NavbarProps) {
+  return (
+    <header className="w-full bg-white">
+      <div className="mx-5 2xl:mx-10 h-[80px] flex items-center justify-between gap-4">
+
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 shrink-0">
           <Image
             src="/logo.png"
-            alt="Logo"
-            width={90}
-            height={30}
-            priority
+            alt="Neeladhri Ceramics Logo"
+            width={100}
+            height={36}
+            className="object-contain py-2"
           />
         </Link>
 
-        {/* RIGHT SIDE - Dynamic Page Name + Hamburger */}
-        <div className="flex items-center gap-22 text-black">
-          <span className="text-lg tracking-wide">
-            {getPageName()}
-          </span>
-
-          <button
-            onClick={() => setOpen((prev) => !prev)}
-            className="text-3xl pointer-events-auto"
+      
+        <div className="hidden lg:flex flex-1 justify-center pointer-events-none">
+          <Typography
+            variant="body-xl"
+            className="bg-[#190B0BCC] text-white text-sm font-medium px-6 py-1.5 xl:px-8 xl:py-2 rounded-full tracking-wider select-none whitespace-nowrap"
           >
-            {open ? "✕" : "☰"}
+            Luxury
+          </Typography>
+        </div>
+
+        {/* Desktop nav links */}
+        <nav className="hidden lg:flex items-center gap-4 2xl:gap-6 shrink-0">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className="text-stone-600 hover:text-[#d4652a] transition-colors duration-200 font-medium whitespace-nowrap"
+            >
+              <Typography variant="body-lg">{link.name}</Typography>
+            </Link>
+          ))}
+        </nav>
+
+        {/* Mobile: Luxury pill + Hamburger/X */}
+        <div className="flex lg:hidden items-center gap-3 ml-auto relative z-[10002]">
+          {!menuOpen && (
+            <span className="bg-[#2b2320] text-white text-xs font-medium px-8 py-2 rounded-full tracking-wider">
+              Luxury
+            </span>
+          )}
+          <button
+            onClick={() => onMenuToggle(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="p-1"
+          >
+            <HamburgerIcon open={menuOpen} />
           </button>
         </div>
-      </motion.div>
 
-      <AnimatePresence>
-        {open && <FullscreenMenu close={() => setOpen(false)} />}
-      </AnimatePresence>
-    </>
+      </div>
+    </header>
   );
 }
