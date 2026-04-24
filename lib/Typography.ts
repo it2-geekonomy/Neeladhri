@@ -1,28 +1,31 @@
 import React from "react";
-import clsx from "clsx";
 import { cn } from "../lib/utils";
+
+export type TypographyVariant =
+  | "display-3xl"
+  | "display-2xl"
+  | "display-xl"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "body-xl"
+  | "body-lg"
+  | "body-sm"
+  | "caption"
+  | "overline";
 
 export interface TypographyProps {
   children: React.ReactNode;
-  variant?:
-    | "display-2xl"
-    | "display-xl"
-    | "h1"
-    | "h2"
-    | "h3"
-    | "h4"
-    | "body-xl"
-    | "body-lg"
-    | "body-sm"
-    | "caption"
-    | "overline";
+  variant?: TypographyVariant;
   className?: string;
   style?: React.CSSProperties;
 }
 
-const variantStyles = {
+const variantStyles: Record<TypographyVariant, string> = {
   // Display - Hero (largest, clear hierarchy)
   // Mobile → Small → Medium → Desktop
+  "display-3xl": "text-[32px] sm:text-[40px] md:text-[50px] lg:text-[65px] font-bold",
   "display-2xl": "text-[28px] sm:text-[32px] md:text-[35px] lg:text-[38px] font-bold",
   "display-xl": "text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-bold",
   
@@ -42,18 +45,19 @@ const variantStyles = {
   overline: "text-[10px] sm:text-[10px] md:text-[11px] lg:text-[12px] font-semibold uppercase tracking-widest",
 };
 
-const defaultFontFamily = {
-  "display-2xl": "font-cinzel",
-  "display-xl": "font-cinzel",
-  h1: "font-cinzel",
-  h2: "font-cinzel",
-  h3: "font-cinzel",
-  h4: "font-cinzel",
-  "body-xl": "font-poppins",
-  "body-lg": "font-poppins",
-  "body-sm": "font-poppins",
-  caption: "font-poppins",
-  overline: "font-poppins",
+const defaultFontFamily: Record<TypographyVariant, string> = {
+  "display-3xl": "font-robotoSlab",
+  "display-2xl": "font-robotoSlab",
+  "display-xl": "font-robotoSlab",
+  h1: "font-robotoSlab",
+  h2: "font-robotoSlab",
+  h3: "font-robotoSlab",
+  h4: "font-robotoSlab",
+  "body-xl": "font-robotoSlab",
+  "body-lg": "font-robotoSlab",
+  "body-sm": "font-robotoSlab",
+  caption: "font-robotoSlab",
+  overline: "font-robotoSlab",
 };
 
 const Typography: React.FC<TypographyProps> = ({
@@ -66,9 +70,7 @@ const Typography: React.FC<TypographyProps> = ({
   const variantClass = variantStyles[variant];
   
   // Check if className contains a font class override
-  const hasFontOverride = className?.includes("font-cinzel") || 
-                         className?.includes("font-cormorant") || 
-                         className?.includes("font-poppins");
+  const hasFontOverride = className?.includes("font-robotoSlab");
   
   // Check if className contains a font weight override
   const hasFontWeightOverride = className?.includes("font-thin") ||
@@ -85,7 +87,7 @@ const Typography: React.FC<TypographyProps> = ({
   let finalVariantClass = variantClass;
   if (hasFontWeightOverride && variantClass) {
     // Remove any font weight classes from variantClass (but keep font family classes)
-    const fontFamilyClasses = ['font-cinzel', 'font-cormorant', 'font-poppins'];
+    const fontFamilyClasses = ['font-robotoSlab'];
     finalVariantClass = variantClass
       .split(/\s+/)
       .filter(cls => {
@@ -103,8 +105,8 @@ const Typography: React.FC<TypographyProps> = ({
   const fontFamilyClass = hasFontOverride ? "" : defaultFontFamily[variant];
 
   const getTag = () => {
-    if (variant === "display-2xl" || variant === "display-xl" || variant === "h1" || variant === "h2" || variant === "h3" || variant === "h4") {
-      return variant === "display-2xl" || variant === "display-xl" ? "h1" : variant;
+    if (variant === "display-3xl" || variant === "display-2xl" || variant === "display-xl" || variant === "h1" || variant === "h2" || variant === "h3" || variant === "h4") {
+      return variant === "display-3xl" || variant === "display-2xl" || variant === "display-xl" ? "h1" : variant;
     }
     return variant === "caption" || variant === "overline" ? "span" : "p";
   };

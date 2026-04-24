@@ -1,7 +1,11 @@
-export default function ContactPage() {
+import ContactBanner from "@/components/Sections/ContactBanner";
+import ContactSection from "@/components/Sections/ContactSection";
+
+export default function Contact() {
   return (
-    <div className="h-screen flex items-center justify-center">
-      Contact Page
+    <div>
+      <ContactBanner />
+      <ContactSection />
     </div>
   );
 }

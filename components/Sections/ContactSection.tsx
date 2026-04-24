@@ -1,108 +1,106 @@
 "use client";
-import { useState } from "react";
-import { validateContactForm } from "@/lib/validation";
-import { CONTACT_INITIAL_FORM, CONTACT_TEXT } from "@/lib/constants/Contact";
+
+import Image from "next/image";
+import Typography from "@/lib/Typography";
 
 export default function ContactSection() {
-  const [form, setForm] = useState(CONTACT_INITIAL_FORM);
-
-  const [errors, setErrors] = useState<any>({});
-  const handleChange = (field: string, value: string) =>
-    setForm({ ...form, [field]: value });
-
-  const handleSubmit = () => {
-    const validationErrors = validateContactForm(form);
-    setErrors({ ...validationErrors });
-
-    if (!Object.keys(validationErrors).length)
-      console.log("Form Submitted", form);
-  };
-
-  const inputStyle = (field: string) =>
-    `w-full border-b bg-transparent text-black py-2 px-1 placeholder-transparent
-     focus:outline-none transition mb-4 ${
-       errors[field]
-         ? "border-red-500 focus:border-red-500"
-         : "border-gray-400 focus:border-brown-600"
-     }`;
-
-  const textareaStyle = (field: string) =>
-    `w-full border rounded-md bg-transparent p-2 resize-none mb-4
-     focus:outline-none transition overflow-hidden ${
-       errors[field]
-         ? "border-red-500 focus:border-red-500"
-         : "border-gray-400 focus:border-brown-600"
-     }`;
-
-  const renderInput = (
-    label: string,
-    field: keyof typeof form,
-    type = "text"
-  ) => (
-    <>
-      <label className="text-black mb-1 font-medium">{label}</label>
-      <input
-        type={type}
-        value={form[field]}
-        onChange={(e) => handleChange(field, e.target.value)}
-        className={inputStyle(field)}
-      />
-      {errors[field] && (
-        <p className="text-red-500 text-sm -mt-3 mb-4">
-          {errors[field]}
-        </p>
-      )}
-    </>
-  );
-
   return (
-    <section className="w-full bg-[#f5eee6] py-8 lg:py-20 px-6">
-      <div className="max-w-[1200px] mx-auto">
-        <h2 className="text-black text-center mb-12 font-serif text-4xl">
-          {CONTACT_TEXT.heading}
-        </h2>
+    <section className="relative w-full min-h-screen overflow-hidden">
+      <Image
+        src="/Contact/Contact_Bg.webp"
+        alt="Contact Background"
+        fill
+        priority
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-black/15" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-10 items-center">
+        <div className="text-white space-y-8">
+          <div>
+            <Typography variant="display-xl" className="text-white font-light mb-4">
+              Get in Touch
+            </Typography>
 
-        <div className="flex flex-col md:flex-row gap-2 md:gap-12 lg:gap-24">
-          {/* LEFT */}
-          <div className="flex-1 flex flex-col">
-            {renderInput(CONTACT_TEXT.name, "name")}
-            {renderInput(CONTACT_TEXT.contact, "contact")}
-            {renderInput(CONTACT_TEXT.email, "email", "email")}
+            <Typography variant="body-lg" className="text-white/80 leading-relaxed max-w-xl">
+              Whether you're designing a home, a commercial space,
+              or sourcing high-quality tiles. Needladri Ceramics
+              is here to support your vision with precision and style.
+            </Typography>
           </div>
 
-          {/* RIGHT */}
-          <div className="flex-1 flex flex-col">
-            <label className="text-black mb-10 md:mb-8 font-medium">
-              {CONTACT_TEXT.message}
-            </label>
+          <div className="grid sm:grid-cols-2 gap-6 text-white/80 text-sm">
+
+            <div className="flex items-start gap-3">
+              <span className="text-lg">📍</span>
+              <Typography variant="body-sm" className="text-white/80">
+                Skanda Mansion, JSS Rd<br />
+                748/41, Kanakapura Rd<br />
+                Bangalore, Karnataka
+              </Typography>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span>📞</span>
+                <Typography variant="body-sm" className="text-white/80">
+                  +91 080 26772477
+                </Typography>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span>✉️</span>
+                <Typography variant="body-sm" className="text-white/80">
+                  info@needladri.com
+                </Typography>
+              </div>
+            </div>
+          </div>
+
+          <Typography variant="body-lg" className="text-white/90">
+            Have a question about our service?<br />
+            We're here to help, contact us today.
+          </Typography>
+
+          <form className="space-y-5 max-w-md">
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="w-full bg-[#7E7669A6] border-2 border-white px-4 py-3 text-white placeholder:text-white focus:outline-none focus:border-white"
+            />
+
+            <input
+              type="email"
+              placeholder="Your Email"
+              className="w-full bg-[#7E7669A6] border-2 border-white px-4 py-3 text-white placeholder:text-white focus:outline-none focus:border-white"
+            />
+
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              className="w-full bg-[#7E7669A6] border-2 border-white px-4 py-3 text-white placeholder:text-white focus:outline-none focus:border-white"
+            />
 
             <textarea
               rows={4}
-              maxLength={500}
-              value={form.message}
-              onChange={(e) => {
-                handleChange("message", e.target.value);
-                e.target.style.height = "auto";
-                e.target.style.height = e.target.scrollHeight + "px";
-              }}
-              className={textareaStyle("message")}
+              placeholder="Message"
+              className="w-full bg-[#7E7669A6] border-2 border-white px-4 py-3 text-white placeholder:text-white focus:outline-none focus:border-white"
             />
-            {errors.message && (
-              <p className="text-red-500 text-sm -mt-3 mb-4">
-                {errors.message}
-              </p>
-            )}
-
-            <div className="mt-4 flex justify-center md:justify-end">
-              <button
-                onClick={handleSubmit}
-                className="w-[120px] py-2 rounded-md border border-gray-400 hover:bg-black hover:text-white transition"
-              >
-                {CONTACT_TEXT.submit}
-              </button>
-            </div>
-          </div>
+          </form>
         </div>
+        <div className="relative w-full max-w-lg mx-auto">
+          <Image
+            src="/Contact/contact.webp"
+            alt="Modern Bathroom Interior"
+            width={500}
+            height={600}
+            className="object-contain w-full h-auto"
+          />
+        </div>
+      </div>
+      <div className="relative z-10 flex justify-center pb-16">
+        <button className="px-10 py-3 bg-gray-200/70 text-black rounded-full hover:bg-white transition">
+          Send Your Message
+        </button>
       </div>
     </section>
   );
