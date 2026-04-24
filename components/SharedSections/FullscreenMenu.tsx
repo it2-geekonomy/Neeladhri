@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Typography from "@/lib/Typography";
 
@@ -17,6 +17,7 @@ const navLinks = [
 export default function FullscreenMenu({ close }: { close: () => void }) {
   return (
     <div className="fixed inset-0 z-[10001] overflow-hidden">
+
       {/* Left Curtain — slides in from left */}
       <motion.div
         initial={{ scaleX: 0 }}
@@ -66,12 +67,11 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
             exit={{ y: 100, opacity: 0 }}
             className="flex flex-col items-center justify-center"
           >
-            <Link
-              href={link.href}
-              onClick={close}
-              className="transition-colors"
-            >
-              <Typography variant="display-xl" className="font-semibold text-[#F79440] hover:text-orange-500">
+            <Link href={link.href} onClick={close} className="transition-colors">
+              <Typography
+                variant="display-xl"
+                className="font-semibold text-[#F79440] hover:text-orange-500"
+              >
                 {link.name}
               </Typography>
             </Link>

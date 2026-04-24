@@ -6,6 +6,7 @@ import Bathroom from "./Bathroom";
 import DiningRoom from "./DiningRoom";
 import TileAnimation from "./TileAnimation";
 import Typography from "@/lib/Typography";
+import Navbar from "@/components/SharedSections/Navbar";
 
 const ZOOM_SCROLL_VH = 400; // vh units of scroll that drive the hero zoom
 
@@ -65,7 +66,7 @@ export default function HeroSection() {
           className="absolute inset-0 bg-cover bg-no-repeat origin-center"
           style={{
             backgroundImage: "url(/Ndoor.png)",
-            backgroundPosition: "center 40px",
+            backgroundPosition: "center ",
             willChange: "transform",
           }}
         />

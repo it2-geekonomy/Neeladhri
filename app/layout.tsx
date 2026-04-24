@@ -28,9 +28,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Neeladhri Ceramics" }],
   creator: "Neeladhri Ceramics",
   publisher: "Neeladhri Ceramics",
-
-  // metadataBase: new URL("https://yourdomain.com"), 
-
   alternates: {
     canonical: "/",
   },
@@ -86,9 +83,10 @@ export const metadata: Metadata = {
   },
 };
 
-import Navbar from "@/components/SharedSections/Navbar";
+import ScrollTriggeredNavbar from "@/components/SharedSections/ScrollTriggeredNavbar";
 import Footer from "@/components/SharedSections/Footer";
 import ScrollToTop from "@/components/Sections/ScrollToTop";
+
 export default function RootLayout({
   children,
 }: {
@@ -97,7 +95,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={robotoSlab.variable}>
       <body className="antialiased">
-        <Navbar />
+        <ScrollTriggeredNavbar />
         {children}
         <Footer />
         <ScrollToTop />
