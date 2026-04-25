@@ -114,7 +114,7 @@ export default function BrandsSection() {
   const allImages = [...BRAND_IMAGES, ...BRAND_IMAGES];
 
   return (
-    <section className="relative w-full mt-4 h-screen">
+    <section className="relative w-full mt-2 h-screen">
       <div className="absolute inset-0 z-0">
         <Image src="/Brands/brandbg1.png" alt="Background" fill className="object-cover" priority />
       </div>

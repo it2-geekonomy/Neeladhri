@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Typography from "@/lib/Typography";
-import { BrandData } from "@/data/brands";
+import { BrandData } from "@/lib/constants/brands";
 
 interface BrandPageProps {
   brand: BrandData;
@@ -29,7 +29,7 @@ export default function BrandPage({ brand }: BrandPageProps) {
           animation: popUp 0.5s ease-out;
         }
       `}</style>
-      <div className="bg-white flex flex-col items-center justify-center px-4 md:px-8 mt-10 mb-12 pop-up">
+      <div className="bg-white flex flex-col items-center justify-center px-4 md:px-8 mt-2 mb-12 pop-up">
         <div
           className="w-full rounded-[4.5rem] p-6 md:p-10"
           style={{ border: "4px solid #7E7669" }}
