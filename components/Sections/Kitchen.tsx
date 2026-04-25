@@ -16,20 +16,6 @@
 //         </h1>
 //         <p className="text-white text-center mt-4 text-lg">Scroll down to explore Living Room</p>
 //       </div>
-      
-//       {/* LivingRoom section for normal scrolling */}
-//       <LivingRoom />
-//     </div>
-//   );
-// });
-
-// Kitchen.displayName = "Kitchen";
-
-// export default Kitchen;
-
-
-"use client";
-
 import { forwardRef } from "react";
 import Typography from "@/lib/Typography";
 
