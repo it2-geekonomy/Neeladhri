@@ -89,7 +89,7 @@ export default function ContactSection() {
         </div>
         <div className="relative w-full max-w-lg mx-auto">
           <Image
-            src="/Contact/contact.webp"
+            src="/Contact/Contact.webp"
             alt="Modern Bathroom Interior"
             width={500}
             height={600}
