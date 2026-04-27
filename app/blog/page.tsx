@@ -6,8 +6,8 @@ export default function BlogPage() {
   return (
     <>
       <BlogsSection />
-      <ContemporaryLiving />
       <FlooringIdeasSection />
+      <ContemporaryLiving />
     </>
   );
 }
