@@ -31,7 +31,6 @@ function HamburgerIcon({ open }: { open: boolean }) {
     </div>
   );
 }
-
 export default function Navbar({ menuOpen, onMenuToggle }: NavbarProps) {
   return (
     <header className="w-full bg-white">
@@ -47,7 +46,6 @@ export default function Navbar({ menuOpen, onMenuToggle }: NavbarProps) {
             className="object-contain py-2"
           />
         </Link>
-
       
         <div className="hidden lg:flex flex-1 justify-center pointer-events-none">
           <Typography
@@ -71,7 +69,6 @@ export default function Navbar({ menuOpen, onMenuToggle }: NavbarProps) {
           ))}
         </nav>
 
-        {/* Mobile: Luxury pill + Hamburger/X */}
         <div className="flex lg:hidden items-center gap-3 ml-auto relative z-[10002]">
           {!menuOpen && (
             <span className="bg-[#2b2320] text-white text-xs font-medium px-8 py-2 rounded-full tracking-wider">
