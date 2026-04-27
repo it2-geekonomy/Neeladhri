@@ -20,7 +20,7 @@ interface NavbarProps {
 }
 
 function HamburgerIcon({ open }: { open: boolean }) {
-  return (
+  return (   
     <div className="flex flex-col gap-[5px]">
       <span
         className={`block h-[2px] transition-all duration-300 origin-center ${
