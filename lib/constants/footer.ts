@@ -2,11 +2,11 @@ export const TAGLINE =
   "Elevating spaces with premium ceramic excellence since 1995.";
 
 export const ABOUT_LINKS = [
-  { label: "Collections", href: "/collection" },
-  { label: "Brands", href: "/brands" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Collections", href: "/Collection" },
+  { label: "Brands", href: "/Brands" },
+  { label: "Gallery", href: "/Gallery" },
+  { label: "Blog", href: "/Blog" },
+  { label: "Contact Us", href: "/Contact" },
 ];
 
 export const PRODUCT_LINKS = [
