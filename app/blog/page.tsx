@@ -1,7 +1,14 @@
+import InsightsHero from "@/components/Sections/Blog/BlogsSection";
+import FlooringIdeas from "@/components/Sections/Blog/ContemporaryLiving";
+import FlooringIdeasSection from "@/components/Sections/Blog/FlooringIdeasSection";
+
 export default function BlogPage() {
   return (
-    <div className="h-screen flex items-center justify-center">
-      Blog Page
-    </div>
+    <main>
+      <InsightsHero />
+      <FlooringIdeasSection />
+      <FlooringIdeas />
+    </main>
+
   );
 }
