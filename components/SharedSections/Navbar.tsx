@@ -3,16 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Typography from "@/lib/Typography";
-
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/About" },
-  { name: "Collection", href: "/Collection" },
-  { name: "Brands", href: "/Brands" },
-  { name: "Gallery", href: "/Gallery" },
-  { name: "Blog", href: "/Blog" },
-  { name: "Contact Us", href: "/Contact" },
-];
+import { NAV_LINKS } from "@/lib/constants/Navlinks";
 
 interface NavbarProps {
   menuOpen: boolean;
@@ -69,13 +60,13 @@ export default function Navbar({ menuOpen, onMenuToggle }: NavbarProps) {
 
         {/* Desktop nav links */}
         <nav className="hidden lg:flex items-center gap-4 2xl:gap-6 shrink-0">
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <Link
-              key={link.name}
+              key={link.text}
               href={link.href}
               className="text-stone-600 hover:text-[#d4652a] transition-colors duration-200 font-medium whitespace-nowrap"
             >
-              <Typography variant="body-lg">{link.name}</Typography>
+              <Typography variant="body-lg">{link.text}</Typography>
             </Link>
           ))}
         </nav>

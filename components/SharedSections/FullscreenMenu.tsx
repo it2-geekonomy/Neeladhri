@@ -3,16 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Typography from "@/lib/Typography";
-
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/About" },
-  { name: "Collection", href: "/Collection" },
-  { name: "Brands", href: "/Brands" },
-  { name: "Gallery", href: "/Gallery" },
-  { name: "Blog", href: "/Blog" },
-  { name: "Contact Us", href: "/Contact" },
-];
+import { NAV_LINKS } from "@/lib/constants/Navlinks";
 
 export default function FullscreenMenu({ close }: { close: () => void }) {
   return (
@@ -51,9 +42,9 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
         exit={{ opacity: 0 }}
         className="absolute inset-0 flex flex-col items-center justify-center gap-8 z-20"
       >
-        {navLinks.map((link, index) => (
+        {NAV_LINKS.map((link, index) => (
           <motion.div
-            key={link.name}
+            key={link.text}
             initial={{ y: 100, opacity: 0 }}
             animate={{
               y: 0,
@@ -72,7 +63,7 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
                 variant="display-xl"
                 className="font-semibold text-[#F79440] hover:text-orange-500"
               >
-                {link.name}
+                {link.text}
               </Typography>
             </Link>
           </motion.div>
