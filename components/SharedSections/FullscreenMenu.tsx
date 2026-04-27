@@ -3,22 +3,12 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Typography from "@/lib/Typography";
-
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/About" },
-  { name: "Collection", href: "/Collection" },
-  { name: "Brands", href: "/Brands" },
-  { name: "Gallery", href: "/Gallery" },
-  { name: "Blog", href: "/Blog" },
-  { name: "Contact Us", href: "/Contact" },
-];
+import { NAV_LINKS } from "@/lib/constants/Navlinks";
 
 export default function FullscreenMenu({ close }: { close: () => void }) {
   return (
     <div className="fixed inset-0 z-[10001] overflow-hidden">
 
-      {/* Left Curtain — slides in from left */}
       <motion.div
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
@@ -28,7 +18,6 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
         className="absolute top-0 left-0 h-full w-1/2 bg-white z-10"
       />
 
-      {/* Right Curtain — slides in from right */}
       <motion.div
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
@@ -37,8 +26,6 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
         style={{ originX: 1 }}
         className="absolute top-0 right-0 h-full w-1/2 bg-white z-10"
       />
-
-      {/* Nav Links Container */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{
@@ -51,9 +38,9 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
         exit={{ opacity: 0 }}
         className="absolute inset-0 flex flex-col items-center justify-center gap-8 z-20"
       >
-        {navLinks.map((link, index) => (
+        {NAV_LINKS.map((link, index) => (
           <motion.div
-            key={link.name}
+            key={link.text}
             initial={{ y: 100, opacity: 0 }}
             animate={{
               y: 0,
@@ -72,14 +59,12 @@ export default function FullscreenMenu({ close }: { close: () => void }) {
                 variant="display-xl"
                 className="font-semibold text-[#F79440] hover:text-orange-500"
               >
-                {link.name}
+                {link.text}
               </Typography>
             </Link>
           </motion.div>
         ))}
       </motion.div>
-
-      {/* Close Button */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

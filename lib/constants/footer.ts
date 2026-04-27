@@ -2,18 +2,18 @@ export const TAGLINE =
   "Elevating spaces with premium ceramic excellence since 1995.";
 
 export const ABOUT_LINKS = [
-  { label: "Collections", href: "/Collection" },
-  { label: "Brands", href: "/Brands" },
-  { label: "Gallery", href: "/Gallery" },
-  { label: "Blog", href: "/Blog" },
-  { label: "Contact Us", href: "/Contact" },
+  { label: "Collections", href: "/collection" },
+  { label: "Brands", href: "/brands" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 export const PRODUCT_LINKS = [
-  { label: "Tiles", href: "/#collection" },
-  { label: "Kitchen Accessories", href: "/#collection" },
-  { label: "Bathroom Fittings", href: "/#collection" },
-  { label: "Allied Products", href: "/#collection" },
+  { label: "Tiles", href: "/collection"},
+  { label: "Kitchen Accessories", href: "/collection" },
+  { label: "Bathroom Fittings", href: "/collection" },
+  { label: "Allied Products", href: "/collection" },
 ];
 
 export const SOCIAL = [
