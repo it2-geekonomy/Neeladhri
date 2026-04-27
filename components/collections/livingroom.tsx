@@ -3,28 +3,35 @@
 import Image from "next/image";
 import Typography from "@/lib/Typography";
 import { useRef, useState, useEffect } from "react";
+import {
+  CAROUSEL_GAP as GAP,
+  CAROUSEL_SIDE_RATIO as SIDE_RATIO,
+  CAROUSEL_CENTER_RATIO as CENTER_RATIO,
+  CAROUSEL_GAP_MOBILE as GAP_MOBILE,
+  CAROUSEL_PEEK_MOBILE as PEEK_MOBILE,
+  LIVING_IMAGES as IMAGES,
+} from "@/lib/constants/collections";
 
-const IMAGES = [
-  "/collections/living1.png",
-  "/collections/livings2.png",
-  "/collections/living3.png",
-  "/collections/living1.png",
-  "/collections/livings2.png",
-  "/collections/living3.png",
-  "/collections/living1.png",
-];
-
-const GAP = 12;
-// Layout: side=20%, center=60% (sides are narrower, center is wider)
-const SIDE_RATIO = 0.20;
-const CENTER_RATIO = 0.60;
+const LOOP_IMAGES = [...IMAGES, ...IMAGES, ...IMAGES];
 
 export default function LivingRoom() {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(IMAGES.length);
+  const [isMobile, setIsMobile] = useState(false);
+
   const dragStart = useRef<number | null>(null);
+  const dragMoved = useRef(false);
   const isAnimating = useRef(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [cw, setCw] = useState(0);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -35,39 +42,74 @@ export default function LivingRoom() {
     return () => ro.disconnect();
   }, []);
 
-  // sideW + GAP + centerW + GAP + sideW = cw
-  // 2*sideW + centerW + 2*GAP = cw
-  const sideW = cw > 0 ? (cw - 2 * GAP) * SIDE_RATIO : 0;
-  const centerW = cw > 0 ? (cw - 2 * GAP) * CENTER_RATIO : 0;
+  // ── Desktop ───────────────────────────────────────────────────────
+  const sideW_desktop = cw > 0 ? (cw - 2 * GAP) * SIDE_RATIO : 0;
+  const centerW_desktop = cw > 0 ? (cw - 2 * GAP) * CENTER_RATIO : 0;
 
-  const getW = (i: number) => (i === index + 1 ? centerW : sideW);
+  // ── Mobile ────────────────────────────────────────────────────────
+  // All cards same width. Center card = cw minus two peek strips and two gaps
+  const centerW_mobile = cw > 0 ? cw - 2 * PEEK_MOBILE - 2 * GAP_MOBILE : 0;
 
-  const getTranslateX = () => {
+  // Height = center card width at 4:3
+  const mobileHeight = cw > 0 ? Math.round(centerW_mobile * (3 / 4)) : 0;
+
+  const gap = isMobile ? GAP_MOBILE : GAP;
+  const centerW = isMobile ? centerW_mobile : centerW_desktop;
+
+  const getTranslateX_desktop = () => {
     let left = 0;
     for (let i = 0; i < index + 1; i++) {
-      left += getW(i) + GAP;
+      const w = i === index + 1 ? centerW_desktop : sideW_desktop;
+      left += w + GAP;
     }
-    return -(left) + sideW + GAP;
+    return -(left) + sideW_desktop + GAP;
   };
 
-  const translateX = cw > 0 ? getTranslateX() : 0;
+  // ✅ Symmetric: left peek === right peek === PEEK_MOBILE
+  // card at `index` should start at x = PEEK_MOBILE + GAP_MOBILE
+  const getTranslateX_mobile = () => {
+    const cardStep = centerW_mobile + GAP_MOBILE;
+    return -(index * cardStep) + PEEK_MOBILE + GAP_MOBILE;
+  };
+
+  const translateX = cw > 0
+    ? (isMobile ? getTranslateX_mobile() : getTranslateX_desktop())
+    : 0;
 
   const goTo = (next: number) => {
     if (isAnimating.current) return;
-    const clamped = Math.max(0, Math.min(IMAGES.length - 3, next));
-    setIndex(clamped);
+    setIndex(next);
     isAnimating.current = true;
-    setTimeout(() => { isAnimating.current = false; }, 300);
+    setTimeout(() => {
+      isAnimating.current = false;
+      if (next >= IMAGES.length * 2) {
+        setIndex(IMAGES.length);
+      } else if (next < IMAGES.length) {
+        setIndex(IMAGES.length * 2 - 1);
+      }
+    }, 220);
   };
 
   const onPointerDown = (e: React.PointerEvent) => {
     dragStart.current = e.clientX;
+    dragMoved.current = false;
   };
-  const onPointerUp = (e: React.PointerEvent) => {
+
+  const onPointerMove = (e: React.PointerEvent) => {
     if (dragStart.current === null) return;
     const delta = dragStart.current - e.clientX;
-    if (delta > 40) goTo(index + 1);
-    else if (delta < -40) goTo(index - 1);
+    if (!dragMoved.current) {
+      if (delta > 40) {
+        goTo(index + 1);
+        dragMoved.current = true;
+      } else if (delta < -40) {
+        goTo(index - 1);
+        dragMoved.current = true;
+      }
+    }
+  };
+
+  const onPointerUp = () => {
     dragStart.current = null;
   };
 
@@ -80,50 +122,52 @@ export default function LivingRoom() {
         Living
       </Typography>
 
-      {/* Viewport */}
       <div
         ref={containerRef}
         className="w-full overflow-hidden cursor-grab active:cursor-grabbing"
-        style={{ height: "75vh" }}
+        style={{
+          height: isMobile ? mobileHeight : "75vh",
+          touchAction: "pan-y",
+        }}
         onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
+        onPointerLeave={onPointerUp}
       >
         {cw > 0 && (
           <div
-            className="flex h-full items-stretch"
+            className="flex h-full"
             style={{
-              gap: GAP,
+              gap,
               transform: `translateX(${translateX}px)`,
-              transition: "transform 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              transition: isAnimating.current
+                ? "transform 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+                : "none",
             }}
           >
-            {IMAGES.map((src, i) => {
-              const w = getW(i);
+            {LOOP_IMAGES.map((src, i) => {
+              const isCenter = i === index + 1;
+              const w = isMobile
+                ? centerW_mobile
+                : isCenter ? centerW_desktop : sideW_desktop;
               return (
                 <div
                   key={i}
-                  className="relative flex-shrink-0 h-full"
-                  style={{
-                    width: w,
-                    transition: "width 0s",
-                    border: "2px solid #A98F76",
-                    overflow: "hidden",
-                  }}
+                  className="flex-shrink-0 overflow-hidden h-full"
+                  style={{ width: w }}
                 >
-                  {/* <Image
-                    src={src}
-                    alt={`Living ${i + 1}`}
-                    fill
-                    draggable={false}
-                    style={{ objectFit: "fill" }}
-                  /> */}
                   <Image
                     src={src}
                     alt={`Living ${i + 1}`}
-                    fill
+                    width={0}
+                    height={0}
+                    sizes="100vw"
                     draggable={false}
+                    className="w-full h-full block object-center"
                     style={{
-                      objectFit: i === index + 1 ? "fill" : "cover",
+                      objectFit: isMobile
+                        ? "contain"
+                        : isCenter ? "fill" : "cover",
                     }}
                   />
                 </div>
@@ -131,7 +175,7 @@ export default function LivingRoom() {
             })}
           </div>
         )}
-      </div> 
+      </div>
     </div>
   );
 }
