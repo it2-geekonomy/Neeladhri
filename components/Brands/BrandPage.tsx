@@ -56,7 +56,7 @@ export default function BrandPage({ brand }: BrandPageProps) {
             <Typography variant="h1" className="font-medium mb-8 text-center" style={{ color: "#7E7669" }}>
               {brand.tagline}
             </Typography>
-            <Typography variant="h2" className="font-light text-center mb-16 leading-relaxed" style={{ color: "#7E7669" }}>
+            <Typography variant="h2" className="font-light text-center mb-2 md:mb-4 lg:mb-14 leading-relaxed" style={{ color: "#7E7669" }}>
               {brand.description}
             </Typography>
           </div>
