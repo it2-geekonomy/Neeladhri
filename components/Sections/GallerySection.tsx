@@ -90,10 +90,10 @@ export default function GallerySection() {
         opacity: 0,
         zIndex: 0,
         pointerEvents: "none",
-        left: side > 0 ? "200%" : "-100%",
+        left: side > 0 ? "150%" : "-150%",
         transform: "translateX(-50%) scale(0.82)",
         transition:
-          "left 0.5s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.5s ease",
+          "left 3s cubic-bezier(0.25,0.46,0.45,0.94), transform 3s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.5s ease",
       };
     }
 

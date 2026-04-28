@@ -19,18 +19,18 @@ export const SLOT_CFG_XS = [
 ];
 
 export const SLOT_CFG_MOBILE = [
-  { xPct: -32, z: -60,  ry:  16, scale: 0.78, op: 0.68 },
+  { xPct: -36, z: -60,  ry:  16, scale: 0.78, op: 0.68 },
   { xPct:   0, z:   0,  ry:   0, scale: 1.00, op: 1.00 },
-  { xPct:  32, z: -60,  ry: -16, scale: 0.78, op: 0.68 },
+  { xPct:  36, z: -60,  ry: -16, scale: 0.78, op: 0.68 },
 ];
 
 
 export const SLOT_CFG_TABLET = [
-  { xPct: -38, z: -160, ry:  32, scale: 0.65, op: 0.50 },
-  { xPct: -20, z:  -70, ry:  20, scale: 0.80, op: 0.75 },
+  { xPct: -42, z: -160, ry:  32, scale: 0.65, op: 0.50 },
+  { xPct: -22, z:  -70, ry:  20, scale: 0.80, op: 0.75 },
   { xPct:   0, z:    0, ry:   0, scale: 1.00, op: 1.00 },
-  { xPct:  20, z:  -70, ry: -20, scale: 0.80, op: 0.75 },
-  { xPct:  38, z: -160, ry: -32, scale: 0.65, op: 0.50 },
+  { xPct:  22, z:  -70, ry: -20, scale: 0.80, op: 0.75 },
+  { xPct:  42, z: -160, ry: -32, scale: 0.65, op: 0.50 },
 ];
 
 
@@ -46,7 +46,7 @@ export const SLOT_CFG_DESKTOP = [
 
 export const CARD_SIZE: Record<Breakpoint, { w: string; h: string }> = {
   xs:      { w: "clamp(230px,72vw,320px)",  h: "clamp(330px,95vw,460px)"  },
-  mobile:  { w: "clamp(160px,42vw,250px)",  h: "clamp(260px,68vw,420px)"  },
-  tablet:  { w: "clamp(110px,18vw,200px)",  h: "clamp(220px,36vw,400px)"  },
+  mobile:  { w: "clamp(150px,40vw,240px)",  h: "clamp(250px,65vw,400px)"  },
+  tablet:  { w: "clamp(140px,22vw,260px)",  h: "clamp(280px,44vw,480px)"  },
   desktop: { w: "clamp(140px,18vw,300px)",  h: "clamp(230px,30vw,500px)"  },
 };
