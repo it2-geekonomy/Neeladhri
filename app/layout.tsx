@@ -86,6 +86,8 @@ export const metadata: Metadata = {
 import ScrollTriggeredNavbar from "@/components/SharedSections/ScrollTriggeredNavbar";
 import Footer from "@/components/SharedSections/Footer";
 import ScrollToTop from "@/components/Sections/ScrollToTop";
+import ThemeWrapper from "@/components/SharedSections/ThemeWrapper";
+import { ThemeProvider } from "@/lib/contexts/ThemeContext";
 
 export default function RootLayout({
   children,
@@ -95,10 +97,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={robotoSlab.variable}>
       <body className="antialiased">
-        <ScrollTriggeredNavbar />
-        {children}
-        <Footer />
-        <ScrollToTop />
+        <ThemeProvider>
+          <ThemeWrapper />
+          <ScrollTriggeredNavbar />
+          {children}
+          <Footer />
+          <ScrollToTop />
+        </ThemeProvider>
       </body>
     </html>
   );
